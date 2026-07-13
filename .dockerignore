@@ -1,0 +1,7 @@
+.git
+.venv
+pycache
+.pytest_cache
+.mypy_cache
+локальные файлы SQLite
+.env
