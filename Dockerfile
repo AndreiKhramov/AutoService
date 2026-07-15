@@ -1,12 +1,12 @@
 FROM python:3.13
 
-WORKDIR /autoservice
+WORKDIR autoservice
 
-COPY requirements.txt /usr/src/autoservice_manager
+COPY requirements.txt /usr/src/autoservice
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/. /autoservice
+COPY src/ src/
 
 EXPOSE 8000
 
