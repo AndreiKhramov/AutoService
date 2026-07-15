@@ -5,7 +5,7 @@ services:
     restart: always
 
     env_file:
-      src/.env
+      .env
 
     environment:
       POSTGRES_DB: $(PGDATABASE)

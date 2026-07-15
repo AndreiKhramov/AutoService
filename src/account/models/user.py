@@ -22,5 +22,5 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     class Meta:
         ordering = ["-id","-created_at"]
         db_table = "users"
-        verbose_name = "User"
-        verbose_name_plural = "Users"
+        verbose_name = "user"
+        verbose_name_plural = "users"
