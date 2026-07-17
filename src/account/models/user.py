@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models
 
+from account.constants import GENDER_CHOICES
 from account.models.managers.user import UserManager
 from config.models import BaseModel
 
@@ -13,6 +14,11 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     is_staff = models.BooleanField(default=False)
     email = models.EmailField(max_length=64, unique=True)
     USERNAME_FIELD = 'email'
+    gender = models.CharField(max_length=1, choices=GENDER_CHOICES)
+    age = models.PositiveSmallIntegerField()
+    country = models.CharField()
+
+
 
     objects = UserManager()
 
