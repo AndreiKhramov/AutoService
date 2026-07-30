@@ -1,13 +1,14 @@
 from django.core.validators import MinLengthValidator
 
-from automobile.constants import  VALID_VIN_SYMBOLS, VALID_REG_NUMBER, BodyType
-from automobile.models.vehicle import Vehicle
+from automobile.validation import  VALID_VIN_SYMBOLS, VALID_REG_NUMBER
+from automobile.constants import BodyType
 from config import settings
 from config.models import BaseModel
 from django.db import models
 
 
-class Automobile(Vehicle, BaseModel):
+class Automobile(BaseModel):
+    brand = models.CharField(verbose_name='Марка', max_length=100)
     model = models.CharField(verbose_name='Модель', max_length=100)
     VIN_number = models.CharField(
         unique=True, verbose_name='VIN', max_length=17,
@@ -24,12 +25,12 @@ class Automobile(Vehicle, BaseModel):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='auto')
 
     def __str__(self):
-        return f"{self.brand} {self.model} {self.VIN_number}"
+        return f'{self.brand} {self.model} {self.VIN_number}'
 
     class Meta:
-        ordering = ["-id","-created_at"]
-        db_table = "automobiles"
-        verbose_name = "Automobile"
-        verbose_name_plural = "Automobiles"
+        ordering = ['-id','-created_at']
+        db_table = 'automobiles'
+        verbose_name = 'Automobile'
+        verbose_name_plural = 'Automobiles'
 
 

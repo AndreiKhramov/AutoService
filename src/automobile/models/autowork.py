@@ -1,12 +1,34 @@
 from django.db import models
-import datetime
 from automobile.constants import Workshop
+from config.models import BaseModel
 
 
-class Autowork(models.Model):
-    work_number = models.CharField(verbose_name='Номер работы', max_length=100)
-    work_name = models.CharField(verbose_name='Название работы', max_length=100)
-    work_duration = models.DurationField(verbose_name='Продолжительность работы', default=datetime.timedelta(minutes=1))
-    workshop = models.CharField(max_length=25, choices=Workshop.choices, default=Workshop.LOCKSMITH)
+class Autowork(BaseModel):
+    number = models.CharField(
+        verbose_name='Номер работы',
+        max_length=100
+    )
+    name = models.CharField(
+        verbose_name='Название работы',
+        max_length=100
+    )
+    duration = models.PositiveIntegerField(
+        verbose_name='Продолжительность работы',
+        default=1
+    )
+    workshop = models.CharField(
+        verbose_name='Цех',
+        max_length=25,
+        choices=Workshop.choices,
+        default=Workshop.LOCKSMITH
+    )
     # work_order = models.ManyToManyField('order.Order', through='OrderWork')
 
+    def __str__(self):
+        return f'{self.name}'
+
+    class Meta:
+        ordering = ['name']
+        db_table = 'autoworks'
+        verbose_name = 'Autowork'
+        verbose_name_plural = 'Autoworks'
