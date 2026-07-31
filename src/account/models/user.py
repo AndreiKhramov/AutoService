@@ -10,7 +10,8 @@ from config.models import BaseModel
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone = models.CharField(
         max_length=255,
-        unique=True
+        unique=True,
+        null=True
     )
     first_name = models.CharField(
         max_length=64
@@ -32,7 +33,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     )
     age = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(18)],
-        help_text='Возраст (не менее 18 лет)'
+        help_text='Возраст (не менее 18 лет)',
+        default=18
     )
     country = models.CharField(
         verbose_name='Страна',

@@ -4,6 +4,8 @@ services:
     build: .
     env_file:
       - .env
+    container_name: web
+    command: sh scripts/entrypoint.sh
     ports:
       - "8000:8000"
     depends_on:

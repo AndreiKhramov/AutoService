@@ -30,6 +30,7 @@ class Order(BaseModel):
     )
     full_time = models.PositiveIntegerField(
         verbose_name='Общая продолжительность работ',
+        default=0
     )
 
     def __str__(self):
