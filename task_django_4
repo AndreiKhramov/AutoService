@@ -1,0 +1,5 @@
+1. Схлопнуть миграции: https://docs.djangoproject.com/en/6.0/topics/migrations/
+2. Поправить нейминг VIN и длинну
+3. rest_framevork drf_spectacular
+4. Почитать про пермиссии в DRF: 
+5. Почитать про aggregate и annotate:
