@@ -2,12 +2,12 @@ FROM python:3.13
 
 WORKDIR autoservice
 
-COPY requirements.txt /usr/src/autoservice
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ src/
 
-EXPOSE 8000
+RUN chmod +x src/scripts/entrypoint.sh
 
-CMD ["python", "src/manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["sh", "src/scripts/entrypoint.sh"]
