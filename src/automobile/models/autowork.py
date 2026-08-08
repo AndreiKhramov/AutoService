@@ -6,11 +6,11 @@ from config.models import BaseModel
 class Autowork(BaseModel):
     number = models.CharField(
         verbose_name='Номер работы',
-        max_length=100
+        max_length=32
     )
     name = models.CharField(
         verbose_name='Название работы',
-        max_length=100
+        max_length=128
     )
     duration = models.PositiveIntegerField(
         verbose_name='Продолжительность работы',
@@ -18,7 +18,7 @@ class Autowork(BaseModel):
     )
     workshop = models.CharField(
         verbose_name='Цех',
-        max_length=25,
+        max_length=32,
         choices=Workshop.choices,
         default=Workshop.LOCKSMITH
     )

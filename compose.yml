@@ -5,7 +5,6 @@ services:
     env_file:
       - .env
     container_name: web
-    command: sh scripts/entrypoint.sh
     ports:
       - "8000:8000"
     depends_on:
@@ -13,7 +12,7 @@ services:
 
   db:
     image: postgres:15
-    container_name: postgres_db
+    container_name: db
     restart: always
 
     env_file:

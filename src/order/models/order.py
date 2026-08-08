@@ -5,16 +5,16 @@ from config.models import BaseModel
 
 
 class Order(BaseModel):
-    number = models.PositiveIntegerField()
+
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='order'
+        related_name='orders'
     )
     auto = models.ForeignKey(
         to='automobile.Automobile',
         on_delete=models.CASCADE,
-        related_name='order'
+        related_name='orders'
     )
     part = models.ManyToManyField(
         to='automobile.Sparepart'
@@ -34,10 +34,10 @@ class Order(BaseModel):
     )
 
     def __str__(self):
-        return f'{self.number}'
+        return f'{self.id}'
 
     class Meta:
-        ordering = ['number', '-created_at']
+        ordering = ['id', '-created_at']
         db_table = 'orders'
         verbose_name = 'Order'
         verbose_name_plural = 'Orders'
