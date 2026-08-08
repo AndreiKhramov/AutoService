@@ -9,7 +9,7 @@ from config.models import BaseModel
 
 class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone = models.CharField(
-        max_length=255,
+        max_length=16,
         unique=True,
         null=True
     )

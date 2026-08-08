@@ -6,21 +6,21 @@ from config.models import BaseModel
 class Sparepart(BaseModel):
     name = models.CharField(
         verbose_name='Деталь',
-        max_length=100
+        max_length=128
     )
     number = models.CharField(
         verbose_name='Номер детали',
-        max_length=100
+        max_length=32
     )
     brand = models.CharField(
         verbose_name='Производитель',
-        max_length=100
+        max_length=64
     )
     image = models.ImageField()
-    ''' Сделать таблицу поставщиков и связь с part_vendor'''
+    # TODO ''' Сделать таблицу поставщиков и связь с part_vendor'''
     vendor = models.CharField(
         verbose_name='Поставщик',
-        max_length=100
+        max_length=128
     )
     price = models.DecimalField(
         verbose_name='Цена',

@@ -1,6 +1,4 @@
-from django.core.validators import MinLengthValidator
-
-from automobile.validation import  VALID_VIN_SYMBOLS, VALID_REG_NUMBER
+from automobile.validation import VALID_VIN_SYMBOLS, VALID_REG_NUMBER, validate_vin_length
 from automobile.constants import BodyType
 from config import settings
 from config.models import BaseModel
@@ -10,23 +8,23 @@ from django.db import models
 class Automobile(BaseModel):
     brand = models.CharField(
         verbose_name='Марка',
-        max_length=100
+        max_length=64
     )
     model = models.CharField(
         verbose_name='Модель',
-        max_length=100
+        max_length=64
     )
-    VIN_number = models.CharField(
+    vin_number = models.CharField(
         unique=True,
         verbose_name='VIN',
-        max_length=17,
         validators=[
             VALID_VIN_SYMBOLS,
-            MinLengthValidator(17, message='VIN должен содержать ровно 17 символов.')
+            validate_vin_length,
         ]
     )
     registration_number = models.CharField(
         unique=True,
+        blank=True,
         validators=[
             VALID_REG_NUMBER
         ],
@@ -34,37 +32,48 @@ class Automobile(BaseModel):
         max_length=15
     )
     body_type = models.CharField(
-        max_length=50,
-        choices=BodyType.choices,
-        verbose_name='Тип кузова'
+        verbose_name='Тип кузова',
+        blank=True,
+        max_length=32,
+        choices=BodyType.choices
+
     )
     chasses_number = models.CharField(
         unique=True,
+        blank=True,
         validators= [
             VALID_VIN_SYMBOLS
         ]
     )
     body_number = models.CharField(
         unique=True,
+        blank=True,
         validators=[
             VALID_VIN_SYMBOLS
         ]
     )
     colour = models.CharField(
-        max_length=50,
+        max_length=32,
+        blank=True,
         verbose_name='Цвет'
     )
     vehicle_passport = models.CharField(
-        unique=True
+        verbose_name='Паспорт транспортного средства',
+        unique=True,
+        blank=True
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
-        related_name='auto'
+        related_name='autos'
     )
 
     def __str__(self):
-        return f'{self.brand} {self.model} {self.VIN_number}'
+        return f'{self.brand} {self.model} {self.vin_number}'
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ['-id','-created_at']
