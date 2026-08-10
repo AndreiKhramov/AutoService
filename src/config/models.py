@@ -1,5 +1,3 @@
-from django.utils import timezone
-
 from django.db import models
 
 class BaseModel(models.Model):
@@ -14,5 +12,3 @@ class BaseModel(models.Model):
 
     class Meta:
         abstract = True
-
-

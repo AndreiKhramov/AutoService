@@ -1,0 +1,25 @@
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    restart: always
+
+    env_file:
+      .env
+
+    environment:
+      POSTGRES_DB: $(PGDATABASE)
+      POSTGRES_USER: $(PGUSER)
+      POSTGRES_PASSWORD: $(PGPASSWORD)
+
+    ports:
+      - '5432:5432'
+
+    volumes:
+      - pg_data:/var/lib/docker/volumes/django-autoservicemanager/_data
+
+volumes:
+  pg_data:
+
+
+      

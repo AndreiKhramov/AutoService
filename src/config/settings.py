@@ -17,7 +17,7 @@ import os
 
 from django.conf.global_settings import AUTH_USER_MODEL
 
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
@@ -43,9 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'account',
-    'automobile',
-    'order',
-
 
     'django_extensions',
 
@@ -89,9 +86,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('PGDATABASE'),
         'USER': env('PGUSER'),
-        'PASSWORD': env('PGPASSWORD'),
-        'HOST': env('PGHOST'),
-        'PORT': env('PGPORT'),
+        'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '5432',
             }
 }
 
