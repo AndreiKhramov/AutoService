@@ -5,6 +5,7 @@ services:
     env_file:
       - .env
     container_name: web
+    restart: always
     ports:
       - "8000:8000"
     depends_on:
