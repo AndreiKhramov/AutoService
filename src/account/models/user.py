@@ -11,7 +11,7 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
     phone = models.CharField(
         max_length=16,
         unique=True,
-        null=True
+        null=False
     )
     first_name = models.CharField(
         max_length=64
@@ -31,6 +31,8 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         max_length=1,
         choices=GenderChoice.choices
     )
+    birth_date = models.DateField()
+
     age = models.PositiveSmallIntegerField(
         validators=[MinValueValidator(18)],
         help_text='Возраст (не менее 18 лет)',
