@@ -1,0 +1,6 @@
+ТЗ разработать гибкую архитектуру роутов для дальнейшего гибкого расширения структуры проекта
+1. Создать 2-3 вьюсета с паршрутами и серилизаторами для отображения 2-3 сущностей.
+2. Почитать про пермиссии и разгранечение доступа:
+DJANGO: https://docs.djangoproject.com/en/6.1/topics/auth/default/#:~:text=permissions.%20set%28%5Bpermission_list%5D%29
+DRF: https://www.django-rest-framework.org/api-guide/permissions/#custom-permissions
+3. Настроить аутентификацию так, чтобы токен не отваливался при обновлении страницы
