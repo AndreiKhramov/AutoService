@@ -142,6 +142,7 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
+        "authentication.models.authentication.RedisJWTAuthentication"
     ],
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
@@ -154,13 +155,14 @@ SPECTACULAR_SETTINGS = {
     'SWAGGER_UI_SETTINGS': {
         'displayRequestDuration': True,
         'filter': True,
+        "persistAuthorization": True,
     },
 }
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(hours=1),
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=3),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
-    "ROTATE_REFRESH_TOKENS": False,
+    "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": False,
     "UPDATE_LAST_LOGIN": False,
 
@@ -197,3 +199,21 @@ SIMPLE_JWT = {
 
     "CHECK_USER_IS_ACTIVE": True,
 }
+
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": os.getenv(
+            "REDIS_URL",
+            "redis://localhost:6380/1",
+        ),
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
+
+JWT_ACCESS_COOKIE = "access_token"
+JWT_REFRESH_COOKIE = "refresh_token"
+JWT_COOKIE_SECURE = not DEBUG
+JWT_COOKIE_SAMESITE = "Lax"

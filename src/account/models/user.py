@@ -32,12 +32,6 @@ class User(AbstractBaseUser, PermissionsMixin, BaseModel):
         choices=GenderChoice.choices
     )
     birth_date = models.DateField()
-
-    age = models.PositiveSmallIntegerField(
-        validators=[MinValueValidator(18)],
-        help_text='Возраст (не менее 18 лет)',
-        default=18
-    )
     country = models.CharField(
         verbose_name='Страна',
         default=CountryChoice.RUSSIA,

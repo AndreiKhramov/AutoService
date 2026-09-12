@@ -25,22 +25,24 @@ class Automobile(BaseModel):
     registration_number = models.CharField(
         unique=True,
         blank=True,
+        null=True,
         validators=[
             VALID_REG_NUMBER
         ],
         verbose_name='Государственный номер',
-        max_length=15
+        max_length=16
     )
     body_type = models.CharField(
         verbose_name='Тип кузова',
         blank=True,
+        null=True,
         max_length=32,
         choices=BodyType.choices
-
     )
     chasses_number = models.CharField(
         unique=True,
         blank=True,
+        null=True,
         validators= [
             VALID_VIN_SYMBOLS
         ]
@@ -48,6 +50,7 @@ class Automobile(BaseModel):
     body_number = models.CharField(
         unique=True,
         blank=True,
+        null=True,
         validators=[
             VALID_VIN_SYMBOLS
         ]
@@ -55,12 +58,14 @@ class Automobile(BaseModel):
     colour = models.CharField(
         max_length=32,
         blank=True,
+        null=True,
         verbose_name='Цвет'
     )
     vehicle_passport = models.CharField(
         verbose_name='Паспорт транспортного средства',
         unique=True,
-        blank=True
+        blank=True,
+        null = True,
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,

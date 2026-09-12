@@ -27,7 +27,6 @@ class Sparepart(BaseModel):
         max_digits=10,
         decimal_places=2,
     )
-    # part_order = models.ManyToManyField('order.Order', through='OrderPart')
 
     def __str__(self):
         return f'{self.number} {self.brand} {self.name}'

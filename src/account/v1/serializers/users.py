@@ -1,9 +1,11 @@
 from django.core.validators import MinLengthValidator, MaxLengthValidator
+from django.core.exceptions import ValidationError as DjangoValidationError
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
-from account.models import User
-from account.validation import name_validator, email_validator, validated_email, validated_name, birth_validator
+from account.models.user import User
+from account.validation import name_validator, email_validator, validated_email, validated_name, birth_validator, \
+    phone_validator, validated_gender
 
 
 class UserSerializer(serializers.Serializer):
@@ -32,13 +34,17 @@ class UserSerializer(serializers.Serializer):
         ]
     )
     gender = serializers.CharField(
-        max_length=1
+        max_length=1,
+        validators=[
+        validated_gender
+        ]
     )
     phone = serializers.CharField(
         validators=[
             UniqueValidator(queryset=User.objects.all(), message='Phone is a unique field'),
             MinLengthValidator(12),
-            MaxLengthValidator(12)
+            MaxLengthValidator(12),
+            phone_validator
         ]
     )
     birth_date = serializers.DateField(
@@ -46,21 +52,17 @@ class UserSerializer(serializers.Serializer):
             birth_validator
         ]
     )
-    # password = serializers.CharField(
-    #     max_length=64,
-    #     validators=[validated_name]
-    # )
 
     def create(self, validated_data):
         """
         Create and return a new `User` instance, given the validated data.
         """
         user = User.objects.create(**validated_data)
-        # try:
-        #     user.full_clean()
-        # except DjangoValidationError as error:
-        #     raise serializers.ValidationError(error.message_dict) from error
-        # user.save()
+        try:
+            user.full_clean()
+        except DjangoValidationError as error:
+            raise serializers.ValidationError(error.message_dict) from error
+        user.save()
         return user
 
     def update(self, instance, validated_data):
@@ -72,30 +74,11 @@ class UserSerializer(serializers.Serializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.gender = validated_data.get('gender', instance.gender)
         instance.phone = validated_data.get('phone', instance.phone)
-        # try:
-        #     instance.full_clean()
-        # except DjangoValidationError as error: raise serializers.ValidationError(error.message_dict) from error
-        # instance.save()
+        try:
+            instance.full_clean()
+        except DjangoValidationError as error:
+            raise serializers.ValidationError(error.message_dict) from error
+        instance.save()
         return instance
 
-    def validate_phone(self, value):
-        """
-        Check is phone_number correct.
-        """
-        if not value:
-            raise serializers.ValidationError("Phone number must not be empty")
-        if not value.startswith('+'):
-            raise serializers.ValidationError("Phone number must starts with '+'")
-        if not value[1:].isdigit():
-            raise serializers.ValidationError("Phone number must contain only digits")
-        return value
 
-    # def validate_gender(self, value):
-    #     """
-    #     Check is gender correct.
-    #     """
-    #     if not value:
-    #         raise serializers.ValidationError("Gender must not be empty")
-    #     if not 'M' or not 'F':
-    #         raise serializers.ValidationError("Gender must be only 'M' - Male or 'F' - Female")
-    #     return value

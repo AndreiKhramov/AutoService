@@ -17,3 +17,10 @@ def validate_vin_length(value):
             _(f'VIN {value} должен содержать ровно 17 символов!'),
             params={'value': value},
         )
+
+def price_validator(value):
+    if value < 0:
+        raise ValidationError(
+            _(f'Цена должна быть больше 0.00'),
+            params={'value': value},
+        )

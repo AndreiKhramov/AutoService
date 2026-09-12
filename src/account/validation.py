@@ -4,6 +4,7 @@ from rest_framework import serializers
 
 validated_name = RegexValidator(r'^[a-zA-Z- ]+$', message="Use only Latin characters, spaces or hyphens.")
 validated_email = RegexValidator(r'^[a-zA-Z0-9_.@]+$', message="Use only latin characters, digits, underscores, '@' or dot.")
+validated_gender = RegexValidator(r'^[MF]+$', message="Use only M (male) or F (female) characters")
 
 def name_validator(value):
     value = value.strip()
@@ -24,5 +25,16 @@ def birth_validator(value):
     if not 18 <= age <= 120:
         raise serializers.ValidationError("Your age has to be between 18 and 120 years.")
 
+def phone_validator(value):
+    """
+    Check is phone_number correct.
+    """
+    if not value:
+        raise serializers.ValidationError("Phone number must not be empty")
+    if not value.startswith('+'):
+        raise serializers.ValidationError("Phone number must starts with '+'")
+    if not value[1:].isdigit():
+        raise serializers.ValidationError("Phone number must contain only digits")
+    return value
 
 

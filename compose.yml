@@ -24,6 +24,7 @@ services:
     environment:
       PGHOST: db
       PGPORT: "5432"
+      REDIS_URL: redis://redis:6379/1
 
     container_name: web
 
@@ -31,9 +32,26 @@ services:
       - "8000:8000"
     depends_on:
       - db
+      - redis
+
+  redis:
+    image: redis:7-alpine
+    container_name: redis
+    restart: always
+    command: redis-server --appendonly yes
+    ports:
+      - "6380:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 5s
+      timeout: 3s
+      retries: 5
 
 volumes:
   pg_data:
+  redis_data:
 
 
 

@@ -2,21 +2,21 @@ from drf_spectacular.utils import extend_schema
 from rest_framework import permissions
 from rest_framework.viewsets import ModelViewSet
 
-from account.models import User
-from account.v1.serializers.users import UserSerializer
+from automobile.models import Autowork
+from automobile.v1.serializers.autoworks import AutoworkSerializer
 
 
-@extend_schema(tags=["ACCOUNT"])
-class UserViewSet(ModelViewSet):
+@extend_schema(tags=["Autoworks"])
+class AutoworkViewSet(ModelViewSet):
 
+    queryset = Autowork.objects.all()
+    serializer_class = AutoworkSerializer
     permission_classes = [permissions.DjangoModelPermissionsOrAnonReadOnly]
-    serializer_class = UserSerializer
     http_method_names = ["get", "post", "put", "delete"]
-    queryset = User.objects.all()
 
     def list(self, request, *args, **kwargs):
         """
-        ## Список пользователей.
+        ## Список работ.
         Разрешения:
         - права - list_user
         """
@@ -24,7 +24,7 @@ class UserViewSet(ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         """
-        ## Создание пользователя.
+        ## Создание работы.
         Разрешения:
         - права - create_user
         """
@@ -32,7 +32,7 @@ class UserViewSet(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         """
-        ## Обновление пользователя.
+        ## Обновление работы.
         Разрешения:
         - права - update_user
         """
@@ -40,7 +40,7 @@ class UserViewSet(ModelViewSet):
 
     def retrieve(self, request, *args, **kwargs):
         """
-        ## Детальная информация пользователя.
+        ## Детальная информация по работе.
         Разрешения:
         - права - update_user
         """
