@@ -1,5 +1,6 @@
 from django.db import models
 
+
 class BodyType(models.TextChoices):
     SEDAN = 'sedan', 'Седан'
     HATCHBACK = 'hatchback', 'Хэтчбэк'

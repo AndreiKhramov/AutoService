@@ -16,7 +16,10 @@ class Sparepart(BaseModel):
         verbose_name='Производитель',
         max_length=64
     )
-    image = models.ImageField()
+    image = models.ImageField(
+        blank=True,
+        null=True
+    )
     # TODO ''' Сделать таблицу поставщиков и связь с part_vendor'''
     vendor = models.CharField(
         verbose_name='Поставщик',

@@ -22,7 +22,6 @@ class Autowork(BaseModel):
         choices=Workshop.choices,
         default=Workshop.LOCKSMITH
     )
-    # work_order = models.ManyToManyField('order.Order', through='OrderWork')
 
     def __str__(self):
         return f'{self.name}'
